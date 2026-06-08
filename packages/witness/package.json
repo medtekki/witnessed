@@ -1,0 +1,15 @@
+{
+  "name": "@witnessed/witness",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/http.ts",
+  "dependencies": {
+    "@witnessed/core": "*",
+    "@witnessed/verifier": "*",
+    "@hono/node-server": "^1.13.0",
+    "better-sqlite3": "^11.3.0",
+    "hono": "^4.6.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.0"
+  }
+}

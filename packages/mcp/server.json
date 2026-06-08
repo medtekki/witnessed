@@ -1,0 +1,41 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "no.medtekki/witnessed-mcp",
+  "description": "Issue and verify witnessed, cryptographically verifiable receipts of AI agent actions. Signs receipts with the agent's own key and witnesses them at witness.medtekki.no.",
+  "version": "0.2.3",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@witnessed/mcp",
+      "version": "0.2.3",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        {
+          "name": "WITNESS_URL",
+          "description": "Witness base URL (default https://witness.medtekki.no)",
+          "isRequired": false,
+          "format": "string"
+        },
+        {
+          "name": "WITNESS_AGENT_KEY_FILE",
+          "description": "Path to persist/load the agent signing key (default ~/.witnessed/agent.jwk)",
+          "isRequired": false,
+          "format": "string"
+        },
+        {
+          "name": "WITNESS_AGENT_JWK",
+          "description": "Agent private key as a JWK JSON string (overrides the key file)",
+          "isRequired": false,
+          "format": "string",
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://witness.medtekki.no/mcp"
+    }
+  ]
+}

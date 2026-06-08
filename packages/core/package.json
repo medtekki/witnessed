@@ -1,0 +1,49 @@
+{
+  "name": "@witnessed/core",
+  "version": "0.1.0",
+  "description": "Core primitives for Receipts — verifiable action receipts for AI agents: types, JCS canonicalization, Ed25519 keys/crypto, claim signing.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "canonicalize": "^2.0.0"
+  },
+  "author": "Erik Hafnor <erikhafnor@gmail.com>",
+  "homepage": "https://witness.medtekki.no",
+  "keywords": [
+    "ai-agents",
+    "agent",
+    "receipts",
+    "verifiable",
+    "provenance",
+    "ed25519",
+    "mcp",
+    "x402"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/medtekki/witnessed.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/medtekki/witnessed/issues"
+  }
+}

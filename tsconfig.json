@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "types": ["node"],
+    "paths": {
+      "@witnessed/core": ["packages/core/src/index.ts"],
+      "@witnessed/verifier": ["packages/verifier/src/verify.ts"],
+      "@witnessed/sdk": ["packages/sdk/src/client.ts"],
+      "@witnessed/witness/src/*": ["packages/witness/src/*"],
+      "@witnessed/sdk/src/*": ["packages/sdk/src/*"]
+    }
+  },
+  "include": [
+    "packages/*/src/**/*.ts",
+    "packages/*/test/**/*.ts",
+    "test/**/*.ts"
+  ]
+}

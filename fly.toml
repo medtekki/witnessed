@@ -1,0 +1,26 @@
+# Fly.io deployment for the witness beta. Deploy with:
+#   fly launch --no-deploy        # once, to create the app + volume
+#   fly secrets set WITNESS_PRIVATE_JWK='...'   # from `npm run gen:witness-key`
+#   fly volumes create receipts_data --size 1
+#   fly deploy
+app = "receipts-witness"
+primary_region = "iad"
+
+[build]
+
+[http_service]
+  internal_port = 8787
+  force_https = true
+  auto_stop_machines = "suspend"
+  auto_start_machines = true
+  # A notary is a trust product — keep one machine warm so it is always reachable.
+  min_machines_running = 1
+
+[[mounts]]
+  source = "receipts_data"
+  destination = "/data"
+
+[env]
+  PORT = "8787"
+  RECEIPTS_DB = "/data/receipts.db"
+  RETENTION_DAYS = "180"

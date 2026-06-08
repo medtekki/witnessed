@@ -1,0 +1,6 @@
+# Caddy obtains and renews a Let's Encrypt certificate for $WITNESS_DOMAIN automatically,
+# then reverse-proxies to the witness container. No manual TLS config needed.
+{$WITNESS_DOMAIN} {
+	encode gzip
+	reverse_proxy witness:8787
+}

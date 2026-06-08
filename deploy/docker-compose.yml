@@ -1,0 +1,40 @@
+# Witness service + Caddy (automatic HTTPS) for a single VPS (e.g. Hetzner).
+# Run from this directory: `docker compose up -d --build`
+# Requires: deploy/.env (WITNESS_DOMAIN) and deploy/witness.env (WITNESS_PRIVATE_JWK).
+
+services:
+  witness:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - witness.env # secret: WITNESS_PRIVATE_JWK
+    environment:
+      PORT: "8787"
+      RECEIPTS_DB: "/data/receipts.db"
+      RETENTION_DAYS: "180"
+    volumes:
+      - receipts-data:/data
+    expose:
+      - "8787" # internal only — reached by Caddy, never published to the host
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      - witness
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      WITNESS_DOMAIN: ${WITNESS_DOMAIN:?set WITNESS_DOMAIN in deploy/.env}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data # ACME certs/keys — persist so you don't re-issue on restart
+      - caddy-config:/config
+
+volumes:
+  receipts-data:
+  caddy-data:
+  caddy-config:

@@ -1,0 +1,50 @@
+{
+  "name": "@witnessed/sdk",
+  "version": "0.1.0",
+  "description": "Client SDK for Receipts — generate a key, issue witnessed action receipts (signing locally), and verify them offline.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@witnessed/core": "^0.1.0",
+    "@witnessed/verifier": "^0.1.0"
+  },
+  "author": "Erik Hafnor <erikhafnor@gmail.com>",
+  "homepage": "https://witness.medtekki.no",
+  "keywords": [
+    "ai-agents",
+    "agent",
+    "receipts",
+    "verifiable",
+    "provenance",
+    "ed25519",
+    "mcp",
+    "x402"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/medtekki/witnessed.git",
+    "directory": "packages/sdk"
+  },
+  "bugs": {
+    "url": "https://github.com/medtekki/witnessed/issues"
+  }
+}

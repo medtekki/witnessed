@@ -1,0 +1,10 @@
+{
+  "name": "@witnessed/gcp-kms",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@witnessed/core": "*",
+    "@google-cloud/kms": "^4.0.0"
+  }
+}

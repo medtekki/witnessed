@@ -1,0 +1,56 @@
+{
+  "name": "@witnessed/mcp",
+  "version": "0.2.3",
+  "mcpName": "no.medtekki/witnessed-mcp",
+  "description": "MCP server for Receipts — a runnable agent CLI (npx @witnessed/mcp) that signs receipts locally and witnesses them, plus library building blocks.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "witnessed-mcp": "./dist/bin.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@witnessed/core": "^0.1.0",
+    "@witnessed/sdk": "^0.1.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.0"
+  },
+  "author": "Erik Hafnor <erikhafnor@gmail.com>",
+  "homepage": "https://witness.medtekki.no",
+  "keywords": [
+    "ai-agents",
+    "agent",
+    "receipts",
+    "verifiable",
+    "provenance",
+    "ed25519",
+    "mcp",
+    "x402"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/medtekki/witnessed.git",
+    "directory": "packages/mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/medtekki/witnessed/issues"
+  }
+}
