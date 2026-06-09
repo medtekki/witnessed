@@ -49,6 +49,8 @@ export function serviceManifest({ base, keyId, publicJwk }: ManifestParams) {
       openapi: `${base}/openapi.json`,
       llms_txt: `${base}/llms.txt`,
       manifest: `${base}/.well-known/receipts.json`,
+      terms: `${base}/terms`,
+      privacy: `${base}/privacy`,
     },
   };
 }
@@ -73,6 +75,9 @@ export function llmsTxt({ base, keyId }: { base: string; keyId: string }): strin
 Agent K asserted action A over content-digest D at time T, independently witnessed at T',
 unaltered since. With an anchor, the witness also confirms the real-world effect.
 
+## Legal
+Terms: ${base}/terms · Privacy: ${base}/privacy
+
 ## Notes
 Beta, free, signing key host-held (not yet KMS). Not a compliance guarantee.
 `;
@@ -83,7 +88,7 @@ export function openApiSpec({ base }: { base: string }) {
   const Receipt = { type: "object", description: "A signed, witnessed action receipt." };
   return {
     openapi: "3.1.0",
-    info: { title: "Receipts witness", version: "0", description: "Verifiable action receipts for AI agents." },
+    info: { title: "Receipts witness", version: "0", description: "Verifiable action receipts for AI agents. Free beta." },
     servers: [{ url: base }],
     paths: {
       "/receipts": {
@@ -120,6 +125,8 @@ export function openApiSpec({ base }: { base: string }) {
       },
       "/public-key": { get: { summary: "Witness public key", responses: { "200": { description: "key_id + public JWK" } } } },
       "/healthz": { get: { summary: "Liveness", responses: { "200": { description: "ok" } } } },
+      "/terms": { get: { summary: "Terms of Service (markdown, v0 draft)", responses: { "200": { description: "Terms of Service", content: { "text/markdown": {} } } } } },
+      "/privacy": { get: { summary: "Privacy Notice (markdown, v0 draft)", responses: { "200": { description: "Privacy Notice", content: { "text/markdown": {} } } } } },
     },
   };
 }

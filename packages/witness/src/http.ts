@@ -12,6 +12,7 @@ import { makeWitness } from "./witness";
 import { paymentRequiredBody } from "./x402";
 import type { PaymentFacilitator } from "./x402";
 import { serviceManifest, llmsTxt, openApiSpec } from "./manifest";
+import { termsOfService, privacyNotice } from "./legal";
 import { mcpHandler } from "./mcp-http";
 import { rateLimit } from "./rate-limit";
 import type { RateLimitConfig } from "./rate-limit";
@@ -82,6 +83,19 @@ export function createApp(config: AppConfig) {
   );
   app.get("/llms.txt", (c) => c.text(llmsTxt({ base: publicBase(c), keyId })));
   app.get("/openapi.json", (c) => c.json(openApiSpec({ base: publicBase(c) })));
+
+  const legalParams = (c: Context) => ({
+    base: publicBase(c),
+    operator: "MEDTEK KI AS",
+    location: "Sandnes, Norway",
+    contact: "support@medtekki.no",
+  });
+  app.get("/terms", (c) =>
+    c.body(termsOfService(legalParams(c)), 200, { "Content-Type": "text/markdown; charset=utf-8" }),
+  );
+  app.get("/privacy", (c) =>
+    c.body(privacyNotice(legalParams(c)), 200, { "Content-Type": "text/markdown; charset=utf-8" }),
+  );
 
   // Hosted MCP (verify/get/info) over Streamable HTTP. Issuance stays client-side (signing).
   app.all(

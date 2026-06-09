@@ -48,4 +48,27 @@ describe("agent-facing manifests", () => {
       expect.arrayContaining(["/receipts", "/receipts/{id}", "/verify", "/public-key", "/healthz"]),
     );
   });
+
+  it("manifest links to the Terms and Privacy documents", async () => {
+    const { app: a } = app();
+    const res = await a.request("/", { headers: { host: "witness.medtekki.no", "x-forwarded-proto": "https" } });
+    const m = await res.json();
+    expect(m.links.terms).toBe("https://witness.medtekki.no/terms");
+    expect(m.links.privacy).toBe("https://witness.medtekki.no/privacy");
+  });
+
+  it("llms.txt references the legal documents", async () => {
+    const { app: a } = app();
+    const txt = await (
+      await a.request("/llms.txt", { headers: { host: "witness.medtekki.no", "x-forwarded-proto": "https" } })
+    ).text();
+    expect(txt).toContain("https://witness.medtekki.no/terms");
+    expect(txt).toContain("https://witness.medtekki.no/privacy");
+  });
+
+  it("openapi covers /terms and /privacy", async () => {
+    const { app: a } = app();
+    const spec = await (await a.request("/openapi.json")).json();
+    expect(Object.keys(spec.paths)).toEqual(expect.arrayContaining(["/terms", "/privacy"]));
+  });
 });

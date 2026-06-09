@@ -77,4 +77,33 @@ describe("witness HTTP", () => {
     });
     expect(res.status).toBe(400);
   });
+
+  it("GET /terms returns the Terms of Service as markdown", async () => {
+    const { app } = setup();
+    const res = await app.request("/terms");
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toContain("text/markdown");
+    const body = await res.text();
+    expect(body).toContain("Terms of Service");
+    expect(body.toLowerCase()).toContain("not legal advice");
+  });
+
+  it("GET /privacy returns the Privacy Notice as markdown", async () => {
+    const { app } = setup();
+    const res = await app.request("/privacy");
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toContain("text/markdown");
+    const body = await res.text();
+    expect(body).toContain("Privacy Notice");
+    expect(body).toContain("MEDTEK KI AS");
+  });
+
+  it("served privacy notice interpolates the request's public base URL", async () => {
+    const { app } = setup();
+    const res = await app.request("/privacy", {
+      headers: { host: "other.example", "x-forwarded-proto": "http" },
+    });
+    const body = await res.text();
+    expect(body).toContain("http://other.example/privacy");
+  });
 });
