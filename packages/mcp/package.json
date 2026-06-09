@@ -1,6 +1,6 @@
 {
   "name": "@witnessed/mcp",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "mcpName": "no.medtekki/witnessed-mcp",
   "description": "MCP server for Receipts — a runnable agent CLI (npx @witnessed/mcp) that signs receipts locally and witnesses them, plus library building blocks.",
   "license": "MIT",

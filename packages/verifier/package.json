@@ -1,6 +1,6 @@
 {
   "name": "@witnessed/verifier",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Offline verifier for Receipts action receipts — checks signatures, the witness countersignature, and evidence chains.",
   "license": "MIT",
   "type": "module",

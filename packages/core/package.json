@@ -1,6 +1,6 @@
 {
   "name": "@witnessed/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Core primitives for Receipts — verifiable action receipts for AI agents: types, JCS canonicalization, Ed25519 keys/crypto, claim signing.",
   "license": "MIT",
   "type": "module",

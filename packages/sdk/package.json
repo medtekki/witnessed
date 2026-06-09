@@ -1,6 +1,6 @@
 {
   "name": "@witnessed/sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Client SDK for Receipts — generate a key, issue witnessed action receipts (signing locally), and verify them offline.",
   "license": "MIT",
   "type": "module",
