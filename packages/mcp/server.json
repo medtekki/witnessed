@@ -1,13 +1,19 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "no.medtekki/witnessed-mcp",
-  "description": "Issue and verify witnessed, cryptographically verifiable receipts of AI agent actions. Signs receipts with the agent's own key and witnesses them at witness.medtekki.no.",
-  "version": "0.2.3",
+  "description": "Issue & verify cryptographically signed, independently witnessed receipts of AI agent actions.",
+  "repository": {
+    "url": "https://github.com/medtekki/witnessed",
+    "source": "github",
+    "subfolder": "packages/mcp"
+  },
+  "websiteUrl": "https://witness.medtekki.no",
+  "version": "0.2.4",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@witnessed/mcp",
-      "version": "0.2.3",
+      "version": "0.2.4",
       "transport": { "type": "stdio" },
       "environmentVariables": [
         {
