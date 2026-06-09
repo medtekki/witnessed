@@ -13,6 +13,8 @@ import { paymentRequiredBody } from "./x402";
 import type { PaymentFacilitator } from "./x402";
 import { serviceManifest, llmsTxt, openApiSpec } from "./manifest";
 import { mcpHandler } from "./mcp-http";
+import { rateLimit } from "./rate-limit";
+import type { RateLimitConfig } from "./rate-limit";
 
 export interface AppConfig {
   /** Local-key mode: provide the witness private JWK and its key id. */
@@ -30,6 +32,8 @@ export interface AppConfig {
   x402?: { facilitator: PaymentFacilitator };
   /** Absolute base URL (e.g. https://witness.medtekki.no) for links in the MCP service_info tool. */
   publicBaseUrl?: string;
+  /** Optional per-IP rate limiting (safety ceiling). Absent → no limiting. */
+  rateLimit?: RateLimitConfig;
 }
 
 function resolveWitness(config: AppConfig): { signer: Signer; keyId: string; publicJwk: Jwk } {
@@ -57,6 +61,11 @@ export function createApp(config: AppConfig) {
   const trusted: Record<string, Jwk> = { [keyId]: publicJwk };
 
   const app = new Hono();
+
+  // Per-IP safety ceiling (absent config → no limiting). Registered before all routes.
+  if (config.rateLimit) {
+    app.use("*", rateLimit(config.rateLimit));
+  }
 
   // Liveness probe for the deployment platform.
   app.get("/healthz", (c) => c.json({ status: "ok" }));

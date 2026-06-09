@@ -17,6 +17,10 @@ import { HttpFacilitator } from "./x402-facilitator";
  *   RETENTION_DAYS       enable retention with this minimum window (e.g. 180)
  *   X402_FACILITATOR_URL + X402_NETWORK + X402_ASSET + X402_PAY_TO + X402_AMOUNT
  *                        enable x402 billing (all five required together)
+ *   RL_ENABLED           rate limiting on/off (default "true"; set "false" to disable)
+ *   RL_WRITE_PER_MIN     per-IP writes/min: POST /receipts, /verify, /mcp (default 30)
+ *   RL_READ_PER_MIN      per-IP reads/min (default 120)
+ *   RL_GLOBAL_WRITE_PER_MIN  process-wide writes/min across all IPs (default 300; 0 = off)
  *
  * BETA NOTE: holding the private key in an env var (your host's secret store) is acceptable for
  * a labelled beta. Before charging real money / handling regulated data, move signing to a
@@ -61,6 +65,19 @@ export function buildConfigFromEnv(env: NodeJS.ProcessEnv) {
       }),
     };
   }
+
+  // Parse a non-negative integer limit, falling back to the default if unset or malformed
+  // (a typo like RL_WRITE_PER_MIN=on must not silently brick a tier by making every request 429).
+  const limit = (raw: string | undefined, dflt: number): number => {
+    const n = Number(raw);
+    return raw !== undefined && Number.isFinite(n) && n >= 0 ? n : dflt;
+  };
+  config.rateLimit = {
+    enabled: (env.RL_ENABLED ?? "true") !== "false",
+    writePerMin: limit(env.RL_WRITE_PER_MIN, 30),
+    readPerMin: limit(env.RL_READ_PER_MIN, 120),
+    globalWritePerMin: limit(env.RL_GLOBAL_WRITE_PER_MIN, 300),
+  };
 
   return config;
 }
